@@ -4,27 +4,19 @@
 
 :root { --radius: 16px; }
 
+/* Make the page at least viewport height so the background shows fully */
+html, body { height: 100%; min-height: 100vh; }
+
 body {
-  position: relative;
-  background: url('/bg.png') no-repeat center center fixed;
-  background-size: cover;
-  color: white;
+  /* EXACT poster, no cropping */
+  background: url('/bg.png') no-repeat center top fixed;
+  background-size: contain;      /* preserve full image */
+  background-color: #d7c39a;     /* parchment color behind the poster */
+  color: #111;                    /* darker text to match light background */
   @apply antialiased;
 }
 
-/* Dark overlay */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.45); /* 45% black overlay */
-  pointer-events: none;
-  z-index: -1;
-}
-
+/* (Keep the rest of your utility classes as they were) */
 .container { @apply max-w-7xl mx-auto px-4; }
 .card { @apply rounded-2xl shadow-sm border border-gray-100 bg-white; }
 .btn { @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 font-medium transition hover:opacity-90; }
