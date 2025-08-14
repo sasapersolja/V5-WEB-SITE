@@ -93,3 +93,37 @@ a:hover {
 }
 /* ensure container under header doesn't add a white bar */
 .site-header .container{ background: transparent !important; }
+
+/* --- Transparent header (no white bar) --- */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Make sure inner wrapper never paints white */
+.site-header .container{
+  background: transparent !important;
+}
+
+/* White links by default over imagery */
+.site-header .nav-link{
+  color: #fff !important;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+/* When scrolled, add subtle dark glass for readability */
+.site-header.scrolled{
+  background: rgba(0,0,0,0.55) !important;
+  backdrop-filter: saturate(120%) blur(6px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Prevent any first section from drawing a top border that looks like a header line */
+main > section:first-child{
+  border-top: 0 !important;
+}

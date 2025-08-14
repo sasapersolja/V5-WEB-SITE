@@ -55,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <script src="/js/scroll-anim.js" defer></script>
     <script src="/js/scroll-anim.js" defer></script>
+    <script src="/js/header-toggle.js" defer></script>
       </body>
     </html>
   );
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <script src="/js/scroll-anim.js" defer></script>
     <script src="/js/scroll-anim.js" defer></script>
+    <script src="/js/header-toggle.js" defer></script>
       </body>
     </html>
   );
@@ -109,6 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
     <script src="/js/scroll-anim.js" defer></script>
+    <script src="/js/header-toggle.js" defer></script>
       </body>
     </html>
   );
