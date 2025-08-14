@@ -46,3 +46,19 @@ body {
 .h1 { @apply text-4xl md:text-6xl font-semibold tracking-tight; }
 .h2 { @apply text-2xl md:text-4xl font-semibold tracking-tight; }
 .lead { @apply text-lg; }
+
+/* Glow hover effects for nav links and buttons */
+a:hover, .btn:hover {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 12px rgba(255, 215, 0, 0.7);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Extra pop for primary buttons */
+.btn-primary:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Extra pop for outline buttons */
+.btn-outline:hover {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.5);
+}
