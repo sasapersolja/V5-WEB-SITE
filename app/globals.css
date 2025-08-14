@@ -78,3 +78,18 @@ a {
 a:hover {
   color: white;
 }
+
+/* --- Transparent header (works on all pages) --- */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.site-header .nav-link{
+  color:#fff !important;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+/* ensure container under header doesn't add a white bar */
+.site-header .container{ background: transparent !important; }
