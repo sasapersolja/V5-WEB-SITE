@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2025-09-12",
+    "city": "Ljubljana, SI",
+    "venue": "Cankarjev dom",
+    "status": "Tickets"
+  },
+  {
+    "date": "2025-10-01",
+    "city": "Zagreb, HR",
+    "venue": "Tvornica Kulture",
+    "status": "Tickets"
+  },
+  {
+    "date": "2025-11-07",
+    "city": "Vienna, AT",
+    "venue": "WUK",
+    "status": "Tickets"
+  }
+]
