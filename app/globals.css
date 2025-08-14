@@ -8,8 +8,8 @@
 html, body { height: 100%; min-height: 100vh; }
 
 body {
-  /* EXACT poster, no cropping */
-  background: url('/bg.png') no-repeat center top fixed;
+  /* EXACT poster, no cropping, perfectly centered */
+  background: url('/bg.png') no-repeat center center fixed;
   background-size: contain;      /* preserve full image */
   background-color: #d7c39a;     /* parchment color behind the poster */
   color: #111;                    /* darker text to match light background */
