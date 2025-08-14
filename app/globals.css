@@ -77,3 +77,19 @@ a:hover, .btn:hover {
 .scroll-fade img.loaded {
   transform: scale(1);
 }
+
+/* Fade-up animation with image zoom */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(50px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.scroll-fade {
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+/* Image zoom effect when loaded */
+img.loaded {
+  animation: fadeUp 0.8s ease-out forwards;
+}
