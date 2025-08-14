@@ -2,13 +2,13 @@ import Link from "next/link";
 
 export function NavBar() {
   return (
-    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-100">
+    <header className="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-transparent">
       <div className="container flex items-center justify-between py-4">
-        <Link href="/" className="flex items-center gap-2 font-semibold text-gray-900">
+        <Link href="/" className="flex items-center gap-2 font-semibold text-white drop-shadow">
           <span className="inline-block w-2.5 h-2.5 rounded-full bg-brand-600" />
           Sasha Persholja
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm text-gray-700">
+        <nav className="hidden md:flex items-center gap-6 text-sm text-white drop-shadow">
           <Link href="/music">Music</Link>
           <Link href="/tour">Tour</Link>
           <Link href="/press">Press Kit</Link>

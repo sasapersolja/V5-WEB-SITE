@@ -4,25 +4,31 @@
 
 :root { --radius: 16px; }
 
-/* Make the page at least viewport height so the background shows fully */
+/* Full-viewport so the image is always visible */
 html, body { height: 100%; min-height: 100vh; }
 
 body {
-  /* EXACT poster, no cropping, perfectly centered */
+  /* EXACT poster, centered, and fixed behind content */
   background: url('/bg.png') no-repeat center center fixed;
-  background-size: contain;      /* preserve full image */
-  background-color: #d7c39a;     /* parchment color behind the poster */
-  color: #111;                    /* darker text to match light background */
+  background-size: contain;          /* no cropping */
+  background-color: #d7c39a;         /* parchment fill around poster */
+  color: #111;
   @apply antialiased;
 }
 
-/* (Keep the rest of your utility classes as they were) */
+/* Let content feel like it's on glass over the poster */
 .container { @apply max-w-7xl mx-auto px-4; }
-.card { @apply rounded-2xl shadow-sm border border-gray-100 bg-white; }
+.card { 
+  @apply rounded-2xl shadow-sm border border-gray-100;
+  background: rgba(255,255,255,0.85);   /* translucent */
+}
 .btn { @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 font-medium transition hover:opacity-90; }
 .btn-primary { @apply btn bg-brand-600 text-white; }
-.btn-outline { @apply btn border border-gray-200; }
+.btn-outline { 
+  @apply btn border border-gray-200;
+  background: rgba(255,255,255,0.6);    /* translucent */
+}
 .section { @apply py-16 md:py-24; }
 .h1 { @apply text-4xl md:text-6xl font-semibold tracking-tight; }
 .h2 { @apply text-2xl md:text-4xl font-semibold tracking-tight; }
-.lead { @apply text-lg text-gray-600; }
+.lead { @apply text-lg text-gray-700; }
