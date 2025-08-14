@@ -7,6 +7,15 @@
 /* Full-viewport so the image is always visible */
 html, body { height: 100%; min-height: 100vh; }
 
+/* Smooth page entrance */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+html {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
 body {
   background: url('/bg.png') no-repeat center center fixed;
   background-size: contain;
@@ -35,40 +44,36 @@ body {
 .btn-outline { 
   @apply btn border border-gray-200;
   background: rgba(0,0,0,0.4);
-  color: #fff;
 }
-
-/* Sections & headings */
-.section { @apply py-16 md:py-24; }
-.h1, .h2, .lead {
-  text-shadow: 0 2px 5px rgba(0,0,0,0.9);
-}
-.h1 { @apply text-4xl md:text-6xl font-semibold tracking-tight; }
-.h2 { @apply text-2xl md:text-4xl font-semibold tracking-tight; }
-.lead { @apply text-lg; }
 
 /* Glow hover effects for nav links and buttons */
 a:hover, .btn:hover {
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 12px rgba(255, 215, 0, 0.7);
   transition: all 0.3s ease-in-out;
 }
-
-/* Extra pop for primary buttons */
 .btn-primary:hover {
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6);
 }
-
-/* Extra pop for outline buttons */
 .btn-outline:hover {
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
-/* Fade-in animation for the whole page */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(1.02); }
-  to { opacity: 1; transform: scale(1); }
+/* Fade-up scroll animation with more dramatic distance */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-html {
-  animation: fadeIn 1.2s ease-out forwards;
+.scroll-fade {
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+/* Zoom-in effect for images */
+.scroll-fade img {
+  transform: scale(1.05);
+  transition: transform 0.8s ease-out;
+}
+.scroll-fade img.loaded {
+  transform: scale(1);
 }
