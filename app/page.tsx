@@ -4,7 +4,7 @@ import { SocialIcons } from "@/components/SocialIcons";
 import { TourList } from "@/components/TourList";
 
 export default function HomePage() {
-  // Parallax effect
+  // Parallax scrolling for hero
   useEffect(() => {
     const hero = document.querySelector(".parallax-hero");
     const onScroll = () => {
@@ -19,15 +19,13 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero Section */}
+      {/* HERO */}
       <section
-        className="parallax-hero relative h-screen bg-center bg-cover flex items-center justify-center"
+        className="parallax-hero relative h-screen bg-center bg-cover flex flex-col items-center justify-center text-center"
         style={{ backgroundImage: "url('/bg.png')" }}
       >
-        <div className="hero-overlay text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white tracking-wide">
-            Sasha Persholja
-          </h1>
+        <div className="bg-black bg-opacity-50 px-6 py-4 rounded-xl">
+          <h1 className="h1 text-white">Sasha Persholja</h1>
           <p className="mt-4 text-lg md:text-xl text-gray-200">
             Funk • Blues • Alt-Electronica from Slovenia
           </p>
@@ -37,11 +35,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Music & Tour Section */}
+      {/* MUSIC */}
       <section className="section bg-black text-white">
         <div className="container grid md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="fade-in">
-            <h2 className="h2">Listen on Spotify</h2>
+            <h2 className="h2 text-brand-red">Listen on Spotify</h2>
             <p className="mt-2 text-gray-300">
               Explore original songs and collaborations.
             </p>
@@ -54,13 +52,15 @@ export default function HomePage() {
               title="Sasha Persholja on Spotify"
             />
           </div>
-          <div className="card p-6 fade-in">
+
+          {/* SHOWS */}
+          <div className="card fade-in">
             <h2 className="h2">Upcoming Shows</h2>
             <div className="mt-4">
               <TourList />
             </div>
             <div className="text-center mt-6">
-              <a href="/tour" className="btn btn-primary">
+              <a href="/tour" className="btn-primary inline-block px-6 py-3 rounded-full">
                 See All Dates
               </a>
             </div>
