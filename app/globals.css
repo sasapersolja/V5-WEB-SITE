@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --radius: 16px; }
+:root {
+  --radius: 16px;
+  --accent: #d60000; /* rock red */
+  --gold: #f4d03f;
+}
 
-/* Full-viewport so the image is always visible */
-html, body { height: 100%; min-height: 100vh; }
+html, body {
+  height: 100%;
+  min-height: 100vh;
+}
 
 /* Smooth page entrance */
 @keyframes fadeIn {
@@ -18,78 +24,57 @@ html {
 
 body {
   background: url('/bg.png') no-repeat center center fixed;
-  background-size: contain;
-  background-color: #d7c39a;
-  color: #fff; /* default text white */
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8); /* shadow for contrast */
+  background-size: cover;
+  background-color: #000; /* deep black */
+  color: white;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
   @apply antialiased;
 }
 
+/* Keep container centered */
 .container { @apply max-w-7xl mx-auto px-4; }
 
-/* Cards are translucent but still readable */
-.card { 
-  @apply rounded-2xl shadow-sm border border-gray-100;
-  background: rgba(0,0,0,0.6);   /* darker glass for readability */
-  color: #fff;
+/* Cards with Rolling Stones vibe */
+.card {
+  @apply rounded-2xl shadow-lg border border-gray-800;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
   text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
 /* Buttons */
-.btn { 
-  @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 font-medium transition hover:opacity-90;
+.btn {
+  @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 font-bold uppercase tracking-wide transition;
   text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
-.btn-primary { @apply btn bg-brand-600 text-white; }
-.btn-outline { 
-  @apply btn border border-gray-200;
-  background: rgba(0,0,0,0.4);
-}
-
-/* Glow hover effects for nav links and buttons */
-a:hover, .btn:hover {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 12px rgba(255, 215, 0, 0.7);
-  transition: all 0.3s ease-in-out;
+.btn-primary {
+  background: var(--accent);
+  color: white;
 }
 .btn-primary:hover {
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6);
+  background: #a50000;
+}
+.btn-outline {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
 }
 .btn-outline:hover {
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.5);
+  background: var(--accent);
+  color: white;
 }
 
-/* Fade-up scroll animation with more dramatic distance */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(50px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Links */
+a {
+  color: var(--gold);
+  transition: color 0.3s ease;
 }
-
-.scroll-fade {
-  opacity: 0;
-  animation: fadeUp 0.8s ease-out forwards;
-}
-
-/* Zoom-in effect for images */
-.scroll-fade img {
-  transform: scale(1.05);
-  transition: transform 0.8s ease-out;
-}
-.scroll-fade img.loaded {
-  transform: scale(1);
-}
-
-/* Fade-up animation with image zoom */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(50px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.scroll-fade {
-  opacity: 0;
-  animation: fadeUp 0.8s ease-out forwards;
-}
-
-/* Image zoom effect when loaded */
-img.loaded {
-  animation: fadeUp 0.8s ease-out forwards;
+a:hover {
+  color: white;
 }
