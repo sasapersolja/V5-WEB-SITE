@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
 
 export default function HomePage() {
   const [loading, setLoading] = useState(false);
@@ -14,11 +17,16 @@ export default function HomePage() {
         body: JSON.stringify(product),
       });
       const data = await res.json();
-      if (data.id) {
-        const stripe = (await import("@stripe/stripe-js")).loadStripe(
-          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-        );
-        (await stripe).redirectToCheckout({ sessionId: data.id });
+
+      const stripe = await stripePromise;
+      if (!stripe) {
+        alert("Stripe failed to initialize. Check your publishable key.");
+        setLoading(false);
+        return;
+      }
+
+      if (data?.id) {
+        await stripe.redirectToCheckout({ sessionId: data.id });
       } else {
         alert("Error creating checkout session");
       }
@@ -34,7 +42,6 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold mb-8">🎵 MP3 Shop</h1>
 
       <div className="grid gap-8 md:grid-cols-3">
-        {/* Example product */}
         <div className="bg-black bg-opacity-70 rounded-lg p-4 shadow-lg text-center">
           <img
             src="/cover.png"
