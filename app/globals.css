@@ -22,14 +22,38 @@ html {
   animation: fadeIn 1.2s ease-out forwards;
 }
 
+/* ===== Global Background with WebP + PNG fallback ===== */
 body {
-  background: url('/bg.png') no-repeat center center fixed;
-  background-size: cover;
   background-color: #000; /* deep black */
+  background-image: url('/background2.png'); /* default fallback */
+  background-image: image-set(
+    url('/background2.webp') type('image/webp'),
+    url('/background2.png') type('image/png')
+  );
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* show entire image, no cropping */
   color: white;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  margin: 0;
   @apply antialiased;
+}
+
+/* Dark overlay for readability */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35); /* adjust opacity for darker/lighter overlay */
+  z-index: -1;
+}
+
+/* Mobile fix for iOS/Safari */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* Keep container centered */
@@ -81,39 +105,21 @@ a:hover {
 
 /* --- Transparent header (works on all pages) --- */
 .site-header{
-  position:sticky; top:0; z-index:50;
+  position: sticky;
+  top: 0;
+  z-index: 50;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
 .site-header .nav-link{
-  color:#fff !important;
-  text-transform:uppercase;
-  letter-spacing:.1em;
-}
-/* ensure container under header doesn't add a white bar */
-.site-header .container{ background: transparent !important; }
-
-/* --- Transparent header (no white bar) --- */
-.site-header{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-/* Make sure inner wrapper never paints white */
-.site-header .container{
-  background: transparent !important;
-}
-
-/* White links by default over imagery */
-.site-header .nav-link{
   color: #fff !important;
   text-transform: uppercase;
   letter-spacing: .1em;
+}
+/* Ensure container under header doesn't add a white bar */
+.site-header .container{
+  background: transparent !important;
 }
 
 /* When scrolled, add subtle dark glass for readability */
@@ -123,23 +129,7 @@ a:hover {
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* Prevent any first section from drawing a top border that looks like a header line */
+/* Prevent any first section from drawing a top border */
 main > section:first-child{
   border-top: 0 !important;
-}
-/* Global background (works on desktop & mobile, shows the full image) */
-html, body {
-  height: 100%;
-}
-body {
-  background-image: url('/background2.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;    /* show entire image, no cropping */
-  background-color: #000;      /* fill side space */
-  margin: 0;
-}
-/* Mobile fix: avoid janky fixed backgrounds on iOS/Android */
-@media (max-width: 768px) {
-  body { background-attachment: scroll; }
 }
