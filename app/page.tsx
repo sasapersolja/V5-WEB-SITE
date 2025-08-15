@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import BlobVideo from "@/components/BlobVideo";
 import { SocialIcons } from "@/components/SocialIcons";
 import { TourList } from "@/components/TourList";
 
@@ -35,37 +36,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* MUSIC */}
-      <section className="section bg-black text-white">
-        <div className="container grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div className="fade-in">
-            <h2 className="h2 text-brand-red">Listen on Spotify</h2>
-            <p className="mt-2 text-gray-300">
-              Explore original songs and collaborations.
-            </p>
-            <iframe
-              className="w-full mt-4"
-              style={{ height: 380 }}
-              src="https://open.spotify.com/embed/artist/4QYxABWNLOKG9poHbP6Qlj"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              title="Sasha Persholja on Spotify"
-            />
-          </div>
+      {/* UPCOMING SHOWS + VIDEO */}
+      <section className="max-w-5xl mx-auto px-6 py-12">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6">Upcoming Shows</h2>
 
-          {/* SHOWS */}
-          <div className="card fade-in">
-            <h2 className="h2">Upcoming Shows</h2>
-            <div className="mt-4">
-              <TourList />
-            </div>
-            <div className="text-center mt-6">
-              <a href="/tour" className="btn-primary inline-block px-6 py-3 rounded-full">
-                See All Dates
-              </a>
-            </div>
-          </div>
-        </div>
+        {/* Video sits above the shows list */}
+        <BlobVideo
+          src="https://uro8hrdopoxixr7s.public.blob.vercel-storage.com/Sasha%20Persholja%20Just%20A%20Case.mp4"
+          // poster="/just-a-case-poster.jpg"  // optional
+          className="mb-8 shadow-lg"
+        />
+
+        {/* Your shows list stays as-is */}
+        <TourList />
       </section>
     </>
   );
