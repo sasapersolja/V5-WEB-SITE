@@ -1,23 +1,21 @@
-import Image from "next/image";
 import { TourList } from "@/components/TourList";
 
 export default function HomePage() {
   return (
     <>
-      {/* SEO-only, not visible */}
+      {/* SEO-only heading (hidden visually) */}
       <h1 className="sr-only">Sasha Persholja — Official Site</h1>
 
-      {/* HERO — show your picture, no visible text */}
+      {/* HERO — shows the FULL image, never cropped */}
       <section className="px-6 py-10">
         <div className="max-w-4xl mx-auto">
-          <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden shadow-xl bg-black">
-            <Image
-              src="/bg-original.png"   // already in your repo
-              alt=""                    // decorative; name is in SEO
-              fill
-              priority
-              className="object-cover"  // or swap to "object-contain bg-black" to show full image
-              sizes="(max-width: 768px) 100vw, 800px"
+          <div className="w-full rounded-2xl overflow-hidden shadow-xl bg-black">
+            <img
+              src="/bg-original.png"   /* file must exist at public/bg-original.png */
+              alt=""                    /* decorative; name kept for SEO only */
+              className="w-full h-auto block"
+              loading="eager"
+              decoding="async"
             />
           </div>
         </div>

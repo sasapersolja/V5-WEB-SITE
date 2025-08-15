@@ -127,3 +127,19 @@ a:hover {
 main > section:first-child{
   border-top: 0 !important;
 }
+/* Global background (works on desktop & mobile, shows the full image) */
+html, body {
+  height: 100%;
+}
+body {
+  background-image: url('/background2.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;    /* show entire image, no cropping */
+  background-color: #000;      /* fill side space */
+  margin: 0;
+}
+/* Mobile fix: avoid janky fixed backgrounds on iOS/Android */
+@media (max-width: 768px) {
+  body { background-attachment: scroll; }
+}
