@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+oot {
+  --radius: 16px;
+  --accent: #d60000; /* rock red */
+  --gold: #f4d03f;
+}
+
+html, body {
+  height: 100%;
+  min-height: 100vh;
+}
+
+/* Smooth page entrance */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+html {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+body {
+  background: url('/bg.png') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #000; /* deep black */
+  color: white;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  @apply antialiased;
+}
+
+/* Keep container centered */
+.container { @apply max-w-7xl mx-auto px-4; }
+
+/* Cards with Rolling Stones vibe */
+.card {
+  @apply rounded-2xl shadow-lg border border-gray-800;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 font-bold uppercase tracking-wide transition;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+.btn-primary:hover {
+  background: #a50000;
+}
+.btn-outline {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+}
+.btn-outline:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* Links */
+a {
+  color: var(--gold);
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: white;
+}
