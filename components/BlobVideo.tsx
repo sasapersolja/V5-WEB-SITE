@@ -1,6 +1,6 @@
 type Props = {
   src: string;           // video URL
-  poster?: string;       // optional image thumbnail in /public
+  poster?: string;       // optional image in /public
   className?: string;    // extra Tailwind classes
   autoPlay?: boolean;    // autoplay?
   loop?: boolean;        // loop playback?
