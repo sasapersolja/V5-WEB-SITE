@@ -29,16 +29,13 @@ export default function Home() {
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black text-white">
-      {/* Swinging full background */}
-      <div
-        className="absolute inset-0 animate-swing"
-        style={{
-          backgroundImage: "url('/background2.png')",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-        }}
-      ></div>
+      {/* Sliding background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-no-repeat bg-cover animate-slide"
+          style={{ backgroundImage: "url('/background2.png')" }}
+        ></div>
+      </div>
 
       {/* Cover image */}
       <div className="relative z-10">
@@ -64,19 +61,20 @@ export default function Home() {
       </div>
 
       <style jsx>{`
-        @keyframes swing {
+        @keyframes slide {
           0% {
-            transform: translateX(-10%);
+            background-position: left center;
           }
           50% {
-            transform: translateX(10%);
+            background-position: right center;
           }
           100% {
-            transform: translateX(-10%);
+            background-position: left center;
           }
         }
-        .animate-swing {
-          animation: swing 20s ease-in-out infinite;
+        .animate-slide {
+          animation: slide 25s ease-in-out infinite;
+          background-size: cover;
         }
       `}</style>
     </main>
