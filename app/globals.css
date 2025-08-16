@@ -133,3 +133,14 @@ a:hover {
 main > section:first-child{
   border-top: 0 !important;
 }
+
+@keyframes swing {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-20%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-swing {
+  animation: swing 20s ease-in-out infinite;
+}
+
