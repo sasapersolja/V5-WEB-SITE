@@ -21,13 +21,7 @@ export async function OPTIONS() {
 export async function POST(req: Request) {
   try {
     const { name, price } = await req.json();
-
-    // Robust base URL resolution:
-    const url = new URL(req.url);
-    const base =
-      process.env.NEXT_PUBLIC_URL ||      // prefer explicit site URL if set
-      process.env.NEXT_PUBLIC_SITE_URL || // fallback if you use this var
-      `${url.protocol}//${url.host}`;     // final fallback from request itself
+    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_URL;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -36,18 +30,18 @@ export async function POST(req: Request) {
           price_data: {
             currency: "usd",
             product_data: { name },
-            unit_amount: Math.round(Number(price) * 100),
+            unit_amount: Math.round(price * 100),
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: `${base}/success`,
-      cancel_url: `${base}/cancel`,
+      success_url: `${origin}/success`,
+      cancel_url: `${origin}/cancel`,
     });
 
-    return corsResponse({ id: session.id }, 200);
+    return corsResponse({ id: session.id, url: session.url }, 200);
   } catch (err: any) {
-    return corsResponse({ error: err.message ?? "Unknown error" }, 500);
+    return corsResponse({ error: err.message }, 500);
   }
 }

@@ -1,55 +1,41 @@
 "use client";
-
 import { useState } from "react";
 
-export default function HomePage() {
+export default function Home() {
   const [loading, setLoading] = useState(false);
 
-  async function handleCheckout(product: { name: string; price: number }) {
+  const handleCheckout = async () => {
     setLoading(true);
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(product),
+        body: JSON.stringify({ name: "Test Song", price: 1.99 }),
       });
+
       const data = await res.json();
 
       if (data?.url) {
-        window.location.href = data.url; // redirect to Stripe checkout
+        window.location.href = data.url;
       } else {
         alert("Error creating checkout session");
       }
     } catch (err) {
-      console.error(err);
-      alert("Something went wrong.");
+      alert("Request failed");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <main className="max-w-5xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold mb-8">🎵 MP3 Shop</h1>
-
-      <div className="grid gap-8 md:grid-cols-3">
-        <div className="bg-black bg-opacity-70 rounded-lg p-4 shadow-lg text-center">
-          <img
-            src="/cover.png"
-            alt="Song Cover"
-            className="w-full h-auto rounded-lg mb-4"
-          />
-          <h2 className="text-xl font-semibold mb-2">My First Song</h2>
-          <p className="mb-4">$1.99</p>
-          <button
-            onClick={() => handleCheckout({ name: "My First Song", price: 1.99 })}
-            disabled={loading}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg disabled:opacity-70"
-          >
-            {loading ? "Redirecting..." : "Buy Now"}
-          </button>
-        </div>
-      </div>
+    <main className="flex min-h-screen items-center justify-center">
+      <button
+        onClick={handleCheckout}
+        disabled={loading}
+        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+      >
+        {loading ? "Redirecting..." : "Buy Test Song - $1.99"}
+      </button>
     </main>
   );
 }
