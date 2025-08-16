@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string);
+// Stripe initialization (publishable key from environment variable)
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_KEY || ""
+);
 
 export default function HomePage() {
   const [loading, setLoading] = useState(false);
@@ -16,9 +19,14 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(product),
       });
-      const data = await res.json();
 
+      if (!res.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
+      const data = await res.json();
       const stripe = await stripePromise;
+
       if (!stripe) {
         alert("Stripe failed to initialize. Check your publishable key.");
         setLoading(false);
@@ -26,12 +34,18 @@ export default function HomePage() {
       }
 
       if (data?.id) {
-        await stripe.redirectToCheckout({ sessionId: data.id });
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: data.id,
+        });
+        if (error) {
+          console.error(error);
+          alert("Stripe Checkout error: " + error.message);
+        }
       } else {
         alert("Error creating checkout session");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Checkout error:", err);
       alert("Something went wrong.");
     }
     setLoading(false);
@@ -42,6 +56,7 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold mb-8">🎵 MP3 Shop</h1>
 
       <div className="grid gap-8 md:grid-cols-3">
+        {/* Example Product */}
         <div className="bg-black bg-opacity-70 rounded-lg p-4 shadow-lg text-center">
           <img
             src="/cover.png"
@@ -62,3 +77,4 @@ export default function HomePage() {
     </main>
   );
 }
+

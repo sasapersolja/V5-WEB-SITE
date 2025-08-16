@@ -1,29 +1,52 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16" as any, // Fix type issue for Vercel build
-});
+export const runtime = "nodejs";            // ensure Node runtime (not Edge)
+export const dynamic = "force-dynamic";     // always run on server
+
+const secret = process.env.STRIPE_SECRET_KEY;
+if (!secret) {
+  console.error("Missing STRIPE_SECRET_KEY in environment.");
+}
+
+const stripe = new Stripe(secret as string);
 
 export async function POST(req: Request) {
-  const product = await req.json();
+  try {
+    const body = await req.json();
+    const name = body?.name;
+    const price = Number(body?.price);
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: { name: product.name },
-          unit_amount: Math.round(product.price * 100),
+    if (!name || Number.isNaN(price) || price <= 0) {
+      return NextResponse.json(
+        { error: "Invalid product payload (name/price)." },
+        { status: 400 }
+      );
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: { name },
+            unit_amount: Math.round(price * 100),
+          },
+          quantity: 1,
         },
-        quantity: 1,
-      },
-    ],
-    mode: "payment",
-    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cancel`,
-  });
+      ],
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cancel`,
+    });
 
-  return NextResponse.json({ id: session.id });
+    return NextResponse.json({ id: session.id });
+  } catch (err: any) {
+    console.error("Checkout error:", err);
+    return NextResponse.json(
+      { error: err?.message ?? "Checkout failed" },
+      { status: 500 }
+    );
+  }
 }
