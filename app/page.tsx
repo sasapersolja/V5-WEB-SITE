@@ -14,7 +14,7 @@ export default function Home() {
       });
       const data = await res.json();
       if (data?.url) {
-        window.location.href = data.url; // Redirect directly to Stripe
+        window.location.href = data.url;
       } else {
         alert("Error creating checkout session");
       }
@@ -27,14 +27,16 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen overflow-hidden">
-      {/* Background: always show full image (contain) + smooth left/right swing */}
-      <img
-        src="/background2.webp"
-        alt="Background"
-        className="pointer-events-none select-none absolute inset-0 w-screen h-screen object-contain bg-black bg-opacity-0 bg-center bg-no-repeat bg-fixed bg-sway"
-      />
+      {/* Background with smooth left↔right swing */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src="/background2.webp"
+          alt="Background"
+          className="absolute top-0 left-0 h-full w-auto min-w-full object-cover bg-pan"
+        />
+      </div>
 
-      {/* Soft overlay for readability */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/35" />
 
       {/* Foreground content */}
@@ -44,14 +46,12 @@ export default function Home() {
             MP3 Shop
           </h1>
 
-          {/* Cover 20% bigger */}
           <img
             src="/cover.png"
             alt="Album Cover"
             className="w-[75vw] max-w-[360px] md:max-w-[420px] scale-[1.2] rounded-2xl shadow-2xl ring-1 ring-white/15"
           />
 
-          {/* Fancy Stripe button */}
           <button
             onClick={handleCheckout}
             disabled={loading}
@@ -67,21 +67,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Page-local CSS (animations, gradient, glow) */}
       <style jsx global>{`
-        /* Smooth background swing left <-> right without cropping */
-        @keyframes sway {
-          0%   { transform: translateX(-6%); }
-          50%  { transform: translateX(6%); }
-          100% { transform: translateX(-6%); }
+        /* Swing background left↔right */
+        @keyframes panX {
+          0%   { transform: translateX(0); }
+          50%  { transform: translateX(-25%); }
+          100% { transform: translateX(0); }
         }
-        .bg-sway { animation: sway 24s ease-in-out infinite; }
+        .bg-pan { animation: panX 40s ease-in-out infinite; }
 
-        /* Button gradient with slow shift */
+        /* Button gradient & glow */
         .btn-gradient {
           background-image: linear-gradient(90deg, #db2777, #7c3aed, #2563eb);
           background-size: 200% 200%;
-          transition: transform .2s ease, box-shadow .2s ease;
           animation: gradientShift 12s ease infinite;
         }
         @keyframes gradientShift {
@@ -89,8 +87,6 @@ export default function Home() {
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-
-        /* Soft outer glow */
         .btn-glow {
           box-shadow:
             0 8px 30px rgba(124, 58, 237, 0.45),
@@ -102,8 +98,6 @@ export default function Home() {
             0 12px 40px rgba(124, 58, 237, 0.55),
             0 4px 14px rgba(219, 39, 119, 0.45);
         }
-
-        /* Gentle pulse */
         @keyframes btnPulse {
           0%, 100% { filter: brightness(1); }
           50%      { filter: brightness(1.15); }
