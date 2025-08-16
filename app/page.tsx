@@ -29,8 +29,8 @@ export default function Home() {
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black">
-      {/* Swinging Background - same size as cover */}
-      <div className="absolute top-1/2 left-1/2 w-[60%] max-w-md -translate-x-1/2 -translate-y-1/2 animate-swing opacity-70">
+      {/* Swinging Background - moves across whole screen */}
+      <div className="absolute top-1/2 left-0 w-[60%] max-w-md -translate-y-1/2 animate-swing opacity-60">
         <img
           src="/background2.png"
           alt="Background"
@@ -40,6 +40,9 @@ export default function Home() {
 
       {/* Foreground Content */}
       <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+        <h1 className="text-4xl font-bold text-white drop-shadow-lg">
+          🎵 MP3 Shop
+        </h1>
         <img
           src="/cover.png"
           alt="Cover"
@@ -62,17 +65,17 @@ export default function Home() {
       <style jsx global>{`
         @keyframes swing {
           0% {
-            transform: translate(-70%, -50%);
+            transform: translateX(-100%) translateY(-50%);
           }
           50% {
-            transform: translate(-30%, -50%);
+            transform: translateX(100%) translateY(-50%);
           }
           100% {
-            transform: translate(-70%, -50%);
+            transform: translateX(-100%) translateY(-50%);
           }
         }
         .animate-swing {
-          animation: swing 30s ease-in-out infinite;
+          animation: swing 40s ease-in-out infinite;
         }
       `}</style>
     </main>
