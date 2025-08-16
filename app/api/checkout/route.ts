@@ -1,32 +1,21 @@
-import Stripe from "stripe";
 import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
-export const runtime = "nodejs";            // ensure Node runtime (not Edge)
-export const dynamic = "force-dynamic";     // always run on server
-
-const secret = process.env.STRIPE_SECRET_KEY;
-if (!secret) {
-  console.error("Missing STRIPE_SECRET_KEY in environment.");
-}
-
-const stripe = new Stripe(secret as string);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  
+});
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const name = body?.name;
-    const price = Number(body?.price);
+    const { name, price } = await req.json();
 
-    if (!name || Number.isNaN(price) || price <= 0) {
-      return NextResponse.json(
-        { error: "Invalid product payload (name/price)." },
-        { status: 400 }
-      );
+    if (!name || !price) {
+      return NextResponse.json({ error: "Missing product details" }, { status: 400 });
     }
 
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
       payment_method_types: ["card"],
+      mode: "payment",
       line_items: [
         {
           price_data: {
@@ -37,16 +26,13 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cancel`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?success=true`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?canceled=true`,
     });
 
     return NextResponse.json({ id: session.id });
   } catch (err: any) {
-    console.error("Checkout error:", err);
-    return NextResponse.json(
-      { error: err?.message ?? "Checkout failed" },
-      { status: 500 }
-    );
+    console.error("Stripe error:", err);
+    return NextResponse.json({ error: "Stripe session failed" }, { status: 500 });
   }
 }
