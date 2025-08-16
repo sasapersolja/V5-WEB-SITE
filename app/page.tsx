@@ -28,14 +28,22 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <button
-        onClick={handleCheckout}
-        disabled={loading}
-        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-      >
-        {loading ? "Redirecting..." : "Buy Test Song - $1.99"}
-      </button>
+    <main
+      className="flex min-h-screen items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: "url('/cover.png')" }}
+    >
+      <div className="bg-black/60 p-8 rounded-2xl text-center shadow-xl">
+        <h1 className="text-4xl font-bold text-white mb-6 drop-shadow-lg">
+          🎵 Support My Music
+        </h1>
+        <button
+          onClick={handleCheckout}
+          disabled={loading}
+          className="px-10 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white text-lg font-semibold rounded-full shadow-lg transform transition hover:scale-110 hover:shadow-2xl disabled:opacity-50"
+        >
+          {loading ? "Redirecting..." : "💳 Buy Test Song – $1.99"}
+        </button>
+      </div>
     </main>
   );
 }
