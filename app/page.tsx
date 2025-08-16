@@ -1,12 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-
-// Stripe initialization (publishable key from environment variable)
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_KEY || ""
-);
 
 export default function HomePage() {
   const [loading, setLoading] = useState(false);
@@ -19,36 +13,19 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(product),
       });
-
-      if (!res.ok) {
-        throw new Error("Failed to create checkout session");
-      }
-
       const data = await res.json();
-      const stripe = await stripePromise;
 
-      if (!stripe) {
-        alert("Stripe failed to initialize. Check your publishable key.");
-        setLoading(false);
-        return;
-      }
-
-      if (data?.id) {
-        const { error } = await stripe.redirectToCheckout({
-          sessionId: data.id,
-        });
-        if (error) {
-          console.error(error);
-          alert("Stripe Checkout error: " + error.message);
-        }
+      if (data?.url) {
+        window.location.href = data.url; // redirect to Stripe checkout
       } else {
         alert("Error creating checkout session");
       }
     } catch (err) {
-      console.error("Checkout error:", err);
+      console.error(err);
       alert("Something went wrong.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
@@ -56,7 +33,6 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold mb-8">🎵 MP3 Shop</h1>
 
       <div className="grid gap-8 md:grid-cols-3">
-        {/* Example Product */}
         <div className="bg-black bg-opacity-70 rounded-lg p-4 shadow-lg text-center">
           <img
             src="/cover.png"
@@ -68,13 +44,12 @@ export default function HomePage() {
           <button
             onClick={() => handleCheckout({ name: "My First Song", price: 1.99 })}
             disabled={loading}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg disabled:opacity-70"
           >
-            {loading ? "Processing..." : "Buy Now"}
+            {loading ? "Redirecting..." : "Buy Now"}
           </button>
         </div>
       </div>
     </main>
   );
 }
-
