@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -15,6 +14,7 @@ export default function Home() {
       });
 
       const data = await res.json();
+
       if (data?.url) {
         window.location.href = data.url;
       } else {
@@ -28,53 +28,51 @@ export default function Home() {
   };
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black text-white">
-      {/* Sliding background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-no-repeat bg-cover animate-slide"
-          style={{ backgroundImage: "url('/background2.png')" }}
-        ></div>
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black">
+      {/* Swinging Background - same size as cover */}
+      <div className="absolute top-1/2 left-1/2 w-[60%] max-w-md -translate-x-1/2 -translate-y-1/2 animate-swing opacity-70">
+        <img
+          src="/background2.png"
+          alt="Background"
+          className="w-full h-auto rounded-xl"
+        />
       </div>
 
-      {/* Cover image */}
-      <div className="relative z-10">
-        <Image
+      {/* Foreground Content */}
+      <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+        <img
           src="/cover.png"
           alt="Cover"
-          width={480}
-          height={480}
-          className="rounded-lg shadow-2xl"
+          className="w-[72%] max-w-lg rounded-xl shadow-2xl"
         />
 
-        {/* Stripe Buy Button */}
-        <div className="mt-6 flex justify-center">
-          <button
-            onClick={handleCheckout}
-            disabled={loading}
-            className="px-8 py-4 text-xl font-bold rounded-lg bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500
-                       text-white shadow-lg animate-pulse hover:scale-105 transform transition disabled:bg-gray-500"
-          >
-            {loading ? "Redirecting..." : "🎵 MP3 Store – Buy Now $1.99"}
-          </button>
-        </div>
+        <button
+          onClick={handleCheckout}
+          disabled={loading}
+          className="px-10 py-4 text-xl font-bold text-white rounded-full 
+                     bg-gradient-to-r from-purple-500 via-pink-500 to-red-500
+                     shadow-lg animate-pulse
+                     hover:scale-110 transform transition duration-300
+                     focus:ring-4 focus:ring-pink-300"
+        >
+          {loading ? "Redirecting..." : "🎵 MP3 Store – Buy Now $1.99"}
+        </button>
       </div>
 
-      <style jsx>{`
-        @keyframes slide {
+      <style jsx global>{`
+        @keyframes swing {
           0% {
-            background-position: left center;
+            transform: translate(-70%, -50%);
           }
           50% {
-            background-position: right center;
+            transform: translate(-30%, -50%);
           }
           100% {
-            background-position: left center;
+            transform: translate(-70%, -50%);
           }
         }
-        .animate-slide {
-          animation: slide 25s ease-in-out infinite;
-          background-size: cover;
+        .animate-swing {
+          animation: swing 30s ease-in-out infinite;
         }
       `}</style>
     </main>
