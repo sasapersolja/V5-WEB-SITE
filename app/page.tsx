@@ -14,7 +14,6 @@ export default function Home() {
       });
 
       const data = await res.json();
-
       if (data?.url) {
         window.location.href = data.url;
       } else {
@@ -29,8 +28,8 @@ export default function Home() {
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black">
-      {/* Swinging Background - moves across whole screen */}
-      <div className="absolute top-1/2 left-0 w-[60%] max-w-md -translate-y-1/2 animate-swing opacity-60">
+      {/* Circular moving background (behind the cover) */}
+      <div className="absolute top-1/2 left-1/2 w-[70%] max-w-xl -translate-x-1/2 -translate-y-1/2 animate-circle opacity-60">
         <img
           src="/background2.png"
           alt="Background"
@@ -43,6 +42,8 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-white drop-shadow-lg">
           🎵 MP3 Shop
         </h1>
+
+        {/* Make cover a bit larger */}
         <img
           src="/cover.png"
           alt="Cover"
@@ -63,19 +64,25 @@ export default function Home() {
       </div>
 
       <style jsx global>{`
-        @keyframes swing {
+        @keyframes circle {
           0% {
-            transform: translateX(-100%) translateY(-50%);
+            transform: translate(-50%, -50%) translateX(0);
+          }
+          25% {
+            transform: translate(-150%, -50%); /* move left (off screen) */
           }
           50% {
-            transform: translateX(100%) translateY(-50%);
+            transform: translate(-50%, -50%) translateX(0); /* center */
+          }
+          75% {
+            transform: translate(50%, -50%); /* move right (off screen) */
           }
           100% {
-            transform: translateX(-100%) translateY(-50%);
+            transform: translate(-50%, -50%) translateX(0); /* back to center */
           }
         }
-        .animate-swing {
-          animation: swing 40s ease-in-out infinite;
+        .animate-circle {
+          animation: circle 40s ease-in-out infinite;
         }
       `}</style>
     </main>
