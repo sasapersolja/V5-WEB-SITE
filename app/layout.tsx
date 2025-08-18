@@ -1,22 +1,6 @@
-import './globals.css';
-import type { Metadata } from "next";
-import "./globals.css";
-import { NavBar } from "@/components/NavBar";
-import { Footer } from "@/components/Footer";
-
-export const metadata: Metadata = {
-  title: "Sasha Persholja — Official Site",
-  description: "Funk • Blues • Alt-Electronica from Slovenia",
-  openGraph: {
-    title: "Sasha Persholja — Official Site",
-    description: "Funk • Blues • Alt-Electronica from Slovenia",
-    url: "https://sasha-persholja-site.vercel.app/",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Sasha Persholja — Official Site",
-  },
+export const metadata = {
+  title: "MP3 Shop",
+  description: "Buy my track securely with Stripe",
 };
 
 export default function RootLayout({
@@ -26,11 +10,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
-        <NavBar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </body>
+      <head>
+        {/* Mobile viewport & iOS safe rendering */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Preload background to avoid white flashes on mobile */}
+        <link rel="preload" as="image" href="/background2.png" />
+        {/* Stripe preconnect for faster checkout */}
+        <link rel="preconnect" href="https://checkout.stripe.com" />
+      </head>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

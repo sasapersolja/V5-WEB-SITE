@@ -2,145 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --radius: 16px;
-  --accent: #d60000; /* rock red */
-  --gold: #f4d03f;
+/* Smooth background swing; tuned per breakpoint for mobile battery + tablet/desktop reveal */
+.swinger {
+  animation: swingMobile 16s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes swingMobile {
+  0%   { transform: translateX(-16vw); }
+  50%  { transform: translateX(16vw); }
+  100% { transform: translateX(-16vw); }
 }
 
-html, body {
-  height: 100%;
-  min-height: 100vh;
-}
-
-/* Smooth page entrance */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(1.02); }
-  to { opacity: 1; transform: scale(1); }
-}
-html {
-  animation: fadeIn 1.2s ease-out forwards;
-}
-
-/* ===== Global Background with WebP + PNG fallback ===== */
-body {
-  background-color: #000; /* deep black */
-  background-image: url('/background2.png'); /* default fallback */
-  background-image: image-set(
-    url('/background2.webp') type('image/webp'),
-    url('/background2.png') type('image/png')
-  );
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; /* show entire image, no cropping */
-  color: white;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-  margin: 0;
-  @apply antialiased;
-}
-
-/* Dark overlay for readability */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35); /* adjust opacity for darker/lighter overlay */
-  z-index: -1;
-}
-
-/* Mobile fix for iOS/Safari */
-@media (max-width: 768px) {
-  body {
-    background-attachment: scroll;
+@media (min-width: 640px) { /* small tablets / big phones landscape */
+  .swinger { animation: swingSm 18s ease-in-out infinite; }
+  @keyframes swingSm {
+    0%   { transform: translateX(-18vw); }
+    50%  { transform: translateX(18vw); }
+    100% { transform: translateX(-18vw); }
   }
 }
 
-/* Keep container centered */
-.container { @apply max-w-7xl mx-auto px-4; }
-
-/* Cards with Rolling Stones vibe */
-.card {
-  @apply rounded-2xl shadow-lg border border-gray-800;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+@media (min-width: 768px) { /* tablets */
+  .swinger { animation: swingMd 20s ease-in-out infinite; }
+  @keyframes swingMd {
+    0%   { transform: translateX(-22vw); }
+    50%  { transform: translateX(22vw); }
+    100% { transform: translateX(-22vw); }
+  }
 }
 
-/* Buttons */
-.btn {
-  @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 font-bold uppercase tracking-wide transition;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-}
-.btn-primary {
-  background: var(--accent);
-  color: white;
-}
-.btn-primary:hover {
-  background: #a50000;
-}
-.btn-outline {
-  border: 2px solid var(--accent);
-  color: var(--accent);
-  background: transparent;
-}
-.btn-outline:hover {
-  background: var(--accent);
-  color: white;
+@media (min-width: 1024px) { /* desktop */
+  .swinger { animation: swingLg 22s ease-in-out infinite; }
+  @keyframes swingLg {
+    0%   { transform: translateX(-25vw); }
+    50%  { transform: translateX(25vw); }
+    100% { transform: translateX(-25vw); }
+  }
 }
 
-/* Links */
-a {
-  color: var(--gold);
-  transition: color 0.3s ease;
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .swinger { animation: none !important; transform: translateX(0); }
 }
-a:hover {
-  color: white;
-}
-
-/* --- Transparent header (works on all pages) --- */
-.site-header{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-.site-header .nav-link{
-  color: #fff !important;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-}
-/* Ensure container under header doesn't add a white bar */
-.site-header .container{
-  background: transparent !important;
-}
-
-/* When scrolled, add subtle dark glass for readability */
-.site-header.scrolled{
-  background: rgba(0,0,0,0.55) !important;
-  backdrop-filter: saturate(120%) blur(6px);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-/* Prevent any first section from drawing a top border */
-main > section:first-child{
-  border-top: 0 !important;
-}
-
-@keyframes swing {
-  0%   { transform: translateX(0); }
-  50%  { transform: translateX(-20%); }
-  100% { transform: translateX(0); }
-}
-
-.animate-swing {
-  animation: swing 20s ease-in-out infinite;
-}
-
